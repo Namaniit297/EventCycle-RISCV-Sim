@@ -1,0 +1,18 @@
+from circuit import Circuit
+from simulators.two_list import TwoListSimulator
+
+c = Circuit()
+c.set_primary_inputs(['A','B','C'])
+c.set_primary_outputs(['Y'])
+
+c.add_gate('NOT',['A'],'Abar')
+c.add_gate('AND',['A','C'],'X1')
+c.add_gate('AND',['Abar','B'],'X2')
+c.add_gate('OR',['X1','X2'],'Y')
+
+sim = TwoListSimulator(c)
+
+print("Initial:", sim.simulate_vector({'A':'0','B':'1','C':'1'}))
+print("Toggle A causes hazard")
+print(sim.simulate_vector({'A':'1','B':'1','C':'1'}))
+print("Hazards detected:", sim.hazards)
