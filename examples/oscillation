@@ -1,0 +1,12 @@
+from circuit import Circuit
+from simulators.zero_delay import ZeroDelaySimulator
+
+c = Circuit()
+c.set_primary_inputs(['A'])
+c.set_primary_outputs(['Y'])
+
+c.add_gate('NOT',['Y'],'Y')   # intentional feedback
+
+sim = ZeroDelaySimulator(c)
+
+print(sim.simulate_vector({'A':'1'}))
